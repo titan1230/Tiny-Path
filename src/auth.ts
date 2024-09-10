@@ -1,7 +1,8 @@
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
-import NextAuth from "next-auth";
+import NextAuth, { Account } from "next-auth";
 import client from "@/lib/db";
 import authConfig from "./auth.config";
+import { JWT } from "next-auth/jwt";
 
 export const BASE_PATH = "/api/auth";
 
@@ -11,7 +12,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     maxAge: 30 * 24 * 60 * 60,
   },
   callbacks: {
-    jwt({ token, user, account }) {
+    jwt({ token, user, account }: { token: JWT; user: any; account: Account | null }) {
 
       if (user) {
 
@@ -41,12 +42,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
     },
     async session({ session, token }) {
-
       if (token?.accessToken) {
         session.accessToken = token.accessToken as string;
 
         try {
-          const db = client.db("users");
+          const db = client.db("tinypath");
           const collection = db.collection("users");
 
           const user = await collection.findOne({ email: token.email });
