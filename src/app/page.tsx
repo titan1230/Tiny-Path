@@ -25,13 +25,32 @@ const LandingPage: React.FC = () => {
       </header>
 
       {/* Hero Section */}
-      <section id="home" className="hero bg-hero-bg text-white py-20 flex flex-col items-center text-center min-h-screen justify-center">
-        <h1 className="text-5xl font-bold mb-4">Shorten, Share, and Track Your Links with Ease</h1>
-        <p className="text-lg mb-8">TinyPath makes URL shortening simple and effective for everyone.</p>
-        <button className="bg-primary text-white py-3 px-6 rounded-full hover:bg-[#1171ee] ease-in-out transition-all">
-          Shorten Your First Link Now
-        </button>
+      <section id="home" className="hero text-white py-20 flex flex-col items-center text-center min-h-screen justify-center relative">
+        <div className="absolute inset-0">
+          <Image
+            src="/HeroBackground.png"
+            alt="Hero Background"
+            layout="fill"
+            objectFit="cover"
+            quality={100}
+            priority
+            className="z-0"
+          />
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/70 z-0"></div>
+        </div>
+
+        <div className="z-10">
+          <h1 className="text-5xl font-bold mb-4">Shorten, Share, and Track Your Links with Ease</h1>
+          <p className="text-lg mb-8">TinyPath makes URL shortening simple and effective for everyone.</p>
+          <Link href="/dashboard">
+            <button className="bg-primary text-white py-3 px-6 rounded-full hover:bg-[#1171ee] ease-in-out transition-all">
+              Shorten Your First Link Now
+            </button>
+          </Link>
+        </div>
       </section>
+
 
       {/* Features Section */}
       <section id="features" className="features bg-base-200 text-white py-32">
