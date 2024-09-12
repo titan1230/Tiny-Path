@@ -30,11 +30,10 @@ const LandingPage: React.FC = () => {
           <Image
             src="/HeroBackground.png"
             alt="Hero Background"
-            layout="fill"
-            objectFit="cover"
+            fill
             quality={100}
+            className="z-0 object-cover"
             priority
-            className="z-0"
           />
           {/* Gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/70 z-0"></div>
