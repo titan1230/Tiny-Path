@@ -23,27 +23,28 @@ const config: Config = {
     themes: [
       {
         mydarktheme: {
-          "primary": "#2C7BE5",
-          "primary-content": "#FFFFFF",
-          "secondary": "#28A745",
-          "secondary-content": "#FFFFFF",
-          "accent": "#FFA726",
-          "accent-content": "#FFFFFF",
-          "neutral": "#101720",
-          "neutral-content": "#E8F1FC",
-          "base-100": "#101720",
-          "base-200": "#1E2025",
-          "base-300": "#2A2E35",
-          "base-content": "#E8F1FC",
-          "info": "#2C7BE5",
-          "info-content": "#FFFFFF",
-          "success": "#28A745",
-          "success-content": "#FFFFFF",
-          "warning": "#FFA726",
-          "warning-content": "#FFFFFF",
-          "error": "#FF4D4D",
-          "error-content": "#FFFFFF",
-        },
+          "primary": "#00ADB5",           // Neon Cyan
+          "primary-content": "#EEEEEE",   // Light Gray
+          "secondary": "#393E46",         // Slate Gray
+          "secondary-content": "#F5F5F5", // Soft White
+          "accent": "#F38181",            // Soft Coral
+          "accent-content": "#FFF9F9",    // Light Pink
+          "neutral": "#222831",           // Dark Charcoal
+          "neutral-content": "#D6D6D6",   // Pale Gray
+          "base-100": "#1A1A2E",          // Deep Midnight Blue
+          "base-200": "#0F0F1A",          // Near Black
+          "base-300": "#2E2E3E",          // Dim Blue Gray
+          "base-content": "#E0E0E0",      // Light Silver
+          "info": "#00ADB5",              // Neon Cyan
+          "info-content": "#DFF7F7",      // Soft Cyan
+          "success": "#21BF73",           // Mint Green
+          "success-content": "#F0FDF4",   // Pale Mint
+          "warning": "#FF9F1C",           // Bright Orange
+          "warning-content": "#FFF8E0",   // Soft Yellow
+          "error": "#E94560",             // Hot Red
+          "error-content": "#FFECEC",     // Pale Pink
+        }
+
       },
     ],
   },
