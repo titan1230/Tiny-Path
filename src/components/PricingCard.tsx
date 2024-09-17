@@ -3,12 +3,12 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 
 function PricingSection() {
-  const [billingCycle, setBillingCycle] = useState('monthly');
 
   const pricingPlans = [
     {
       name: 'Free Plan',
-      monthlyPrice: 0,
+      price: 0,
+      isFree: true,
       description: 'Perfect for individuals and small projects. Get started with essential features and shorten links effortlessly.',
       features: [
         'Create up to 100 short links per month',
@@ -19,7 +19,7 @@ function PricingSection() {
     },
     {
       name: 'Business Plan',
-      monthlyPrice: 5,
+      price: 5,
       description: 'Ideal for startups and small businesses. Unlock more features to boost engagement and track your links efficiently.',
       features: [
         'Unlimited short links.',
@@ -30,7 +30,7 @@ function PricingSection() {
     },
     {
       name: 'Enterprise Plan',
-      monthlyPrice: "Contact Sales",
+      price: "Contact Sales",
       isEnterprise: true,
       description: 'Tailored solutions for large organizations with high-volume link needs and detailed tracking.',
       features: [
@@ -43,7 +43,7 @@ function PricingSection() {
   ];
 
   return (
-    <div className='my-10'>
+    <div className='my-10 scroll-m-24' id='pricing'>
       <div className="flex flex-col justify-center items-center gap-4 sm:gap-5 mt-5">
         <div className="text-4xl sm:text-6xl">Our Pricing Plans</div>
         <span className="text-center text-gray-300 text-sm sm:text-base">
@@ -58,8 +58,8 @@ function PricingSection() {
               <span className="text-white">{plan.name}</span>
               <div className="mt-3 mb-2">
                 <span className="text-white text-3xl">
-                  {plan.isEnterprise ? plan.monthlyPrice : `$${plan.monthlyPrice}`}
-                  {plan.isEnterprise ? "" : <span className="text-xs">{'per month'}</span>}
+                  {plan.isEnterprise ? plan.price : `$${plan.price}`}
+                  {plan.isFree || plan.isEnterprise ? "" : <span className="text-xs">{'One Time'}</span>}
                 </span>
               </div>
               <div className='min-h-28'>
