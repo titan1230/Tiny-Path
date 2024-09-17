@@ -63,7 +63,7 @@ const LandingPage: React.FC = () => {
           <section id="home" className="hero text-white py-32 flex flex-col items-center text-center min-h-screen justify-center relative">
             <div className="absolute inset-0 overflow-hidden">
               {/* Background Spline Scene */}
-              <Suspense fallback={
+              {/* <Suspense fallback={
                 <div>
                   <Image
                     src="/HeroBackground.png"
@@ -76,11 +76,22 @@ const LandingPage: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/90 z-0"></div>
                 </div>
               }>
+                <main>
+                  <Spline
+                    scene="https://prod.spline.design/PLLRXsDm5UB4hV8X/scene.splinecode"
+                    className="scale-110 w-full h-full object-cover z-50"
+
+                  />
+                </main>
+              </Suspense> */}
+
+              <main>
                 <Spline
                   scene="https://prod.spline.design/PLLRXsDm5UB4hV8X/scene.splinecode"
                   className="scale-110 w-full h-full object-cover z-50"
+
                 />
-              </Suspense>
+              </main>
 
             </div>
 
