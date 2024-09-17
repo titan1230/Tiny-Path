@@ -1,31 +1,105 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useRef, useState } from "react";
 import Image from 'next/image';
 import { FiLink, FiEdit, FiBarChart2, FiLock } from 'react-icons/fi';
 import Link from "next/link";
+import PricingCard from "@/components/PricingCard";
 
 const LandingPage: React.FC = () => {
+
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const drawerRef = useRef<HTMLDivElement | null>(null);
+
+  const toggleMobileNav = () => {
+    setIsMobileNavOpen(!isMobileNavOpen);
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
+      setIsMobileNavOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isMobileNavOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMobileNavOpen]);
+
   return (
     <div className="bg-base-100 text-white">
       {/* Header */}
-      <header className="bg-neutral text-white py-4 px-8 flex justify-between items-center fixed top-0 w-full z-50">
-        <div className="flex items-center">
-          <Image src="/TinyPath.png" alt="TinyPath Logo" height={40} width={40} priority />
-          <nav className="ml-8">
-            <Link href="#home" className="text-white mx-4">Home</Link>
-            <Link href="#features" className="text-white mx-4">Features</Link>
-            <Link href="#pricing" className="text-white mx-4">Pricing</Link>
-            <Link href="#about" className="text-white mx-4">About Us</Link>
-          </nav>
+      <div className="drawer">
+        {/* Toggle drawer for mobile */}
+        <input
+          id="my-drawer"
+          type="checkbox"
+          className="drawer-toggle"
+          checked={isMobileNavOpen}
+          onChange={toggleMobileNav}
+        />
+
+        {/* Header */}
+        <header className="bg-neutral text-white py-4 px-6 md:px-8 flex justify-between items-center fixed top-0 w-full z-50 shadow-lg">
+          <div className="flex items-center">
+            <Image src="/TinyPath.png" alt="TinyPath Logo" height={40} width={40} priority />
+
+            {/* Desktop Navigation */}
+            <nav className="ml-8 hidden md:flex space-x-6">
+              <Link href="#home" className="text-lg font-medium hover:text-primary transition">Home</Link>
+              <Link href="#features" className="text-lg font-medium hover:text-primary transition">Features</Link>
+              <Link href="#pricing" className="text-lg font-medium hover:text-primary transition">Pricing</Link>
+              <Link href="#about" className="text-lg font-medium hover:text-primary transition">About Us</Link>
+            </nav>
+          </div>
+
+          {/* Get Started Button for Desktop */}
+          <Link href="/dashboard" className="hidden md:block">
+            <button className="bg-primary text-white py-2 px-6 rounded-lg hover:bg-[#1171ee] ease-in-out transition-all shadow-md">
+              Get Started
+            </button>
+          </Link>
+
+          {/* Hamburger Menu for Mobile */}
+          <label htmlFor="my-drawer" className="md:hidden text-2xl cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+          </label>
+        </header>
+
+        {/* Mobile Navigation Drawer */}
+        <div className="drawer-content">
+          <div className={`fixed inset-0 z-40 transition-transform transform ${isMobileNavOpen ? "translate-x-0" : "translate-x-full"} md:hidden`} ref={drawerRef}>
+            <div className="bg-neutral p-6 w-64 h-full">
+              <nav className="space-y-6">
+                <Link href="#home" className="text-xl font-medium block hover:text-primary transition" onClick={toggleMobileNav}>Home</Link>
+                <Link href="#features" className="text-xl font-medium block hover:text-primary transition" onClick={toggleMobileNav}>Features</Link>
+                <Link href="#pricing" className="text-xl font-medium block hover:text-primary transition" onClick={toggleMobileNav}>Pricing</Link>
+                <Link href="#about" className="text-xl font-medium block hover:text-primary transition" onClick={toggleMobileNav}>About Us</Link>
+              </nav>
+
+              {/* Get Started Button for Mobile */}
+              <Link href="/dashboard">
+                <button className="mt-6 bg-primary text-white py-2 px-6 w-full rounded-lg hover:bg-[#1171ee] ease-in-out transition-all shadow-md">
+                  Get Started
+                </button>
+              </Link>
+            </div>w
+          </div>
         </div>
-        <Link href="/dashboard">
-          <button className="bg-primary text-white py-2 px-4 rounded-lg hover:bg-[#1171ee] ease-in-out transition-all">
-            Get Started
-          </button>
-        </Link>
-      </header>
+      </div>
+
 
       {/* Hero Section */}
-      <section id="home" className="hero text-white py-20 flex flex-col items-center text-center min-h-screen justify-center relative">
+      <section id="home" className="hero text-white py-32 flex flex-col items-center text-center min-h-screen justify-center relative">
         <div className="absolute inset-0">
           <Image
             src="/HeroBackground.png"
@@ -35,93 +109,65 @@ const LandingPage: React.FC = () => {
             className="z-0 object-cover"
             priority
           />
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/70 z-0"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/90 z-0"></div>
         </div>
 
         <div className="z-10">
-          <h1 className="text-5xl font-bold mb-4">Shorten, Share, and Track Your Links with Ease</h1>
-          <p className="text-lg mb-8">TinyPath makes URL shortening simple and effective for everyone.</p>
+          <h1 className="text-6xl font-extrabold mb-6">Shorten, Share, and Track Your Links with Ease</h1>
+          <p className="text-xl mb-8">TinyPath makes URL shortening simple and effective for everyone.</p>
           <Link href="/dashboard">
-            <button className="bg-primary text-white py-3 px-6 rounded-full hover:bg-[#1171ee] ease-in-out transition-all">
+            <button className="bg-primary text-white py-4 px-8 rounded-full hover:bg-[#1171ee] ease-in-out transition-all shadow-lg">
               Shorten Your First Link Now
             </button>
           </Link>
         </div>
       </section>
 
-
       {/* Features Section */}
-      <section id="features" className="features bg-base-200 text-white py-32">
+      <section id="features" className="features bg-base-200 text-white py-32 px-10">
         <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-10">Why Choose TinyPath?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="feature-item flex flex-col items-center">
-              <FiLink className="text-primary text-4xl mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Easy URL Shortening</h3>
-              <p className="text-center">Shorten any URL in seconds with our user-friendly interface.</p>
+          <h2 className="text-4xl font-bold mb-12">Why Choose TinyPath?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <div className="feature-item flex flex-col items-center p-6 bg-neutral rounded-lg shadow-lg transition-transform hover:scale-105">
+              <FiLink className="text-primary text-6xl mb-6" />
+              <h3 className="text-2xl font-semibold mb-4">Easy URL Shortening</h3>
+              <p>Shorten any URL in seconds with our user-friendly interface.</p>
             </div>
-            <div className="feature-item flex flex-col items-center">
-              <FiEdit className="text-primary text-4xl mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Customizable Links</h3>
-              <p className="text-center">Create branded and customizable short links to enhance your brand identity.</p>
+            <div className="feature-item flex flex-col items-center p-6 bg-neutral rounded-lg shadow-lg transition-transform hover:scale-105">
+              <FiEdit className="text-primary text-6xl mb-6" />
+              <h3 className="text-2xl font-semibold mb-4">Customizable Links</h3>
+              <p>Create branded and customizable short links to enhance your brand identity.</p>
             </div>
-            <div className="feature-item flex flex-col items-center">
-              <FiBarChart2 className="text-primary text-4xl mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Analytics Dashboard</h3>
-              <p className="text-center">Track link performance with real-time analytics and insights.</p>
+            <div className="feature-item flex flex-col items-center p-6 bg-neutral rounded-lg shadow-lg transition-transform hover:scale-105">
+              <FiBarChart2 className="text-primary text-6xl mb-6" />
+              <h3 className="text-2xl font-semibold mb-4">Analytics Dashboard</h3>
+              <p>Track link performance with real-time analytics and insights.</p>
             </div>
-            <div className="feature-item flex flex-col items-center">
-              <FiLock className="text-primary text-4xl mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Secure and Reliable</h3>
-              <p className="text-center">Enjoy secure and reliable service with top-notch privacy features.</p>
+            <div className="feature-item flex flex-col items-center p-6 bg-neutral rounded-lg shadow-lg transition-transform hover:scale-105">
+              <FiLock className="text-primary text-6xl mb-6" />
+              <h3 className="text-2xl font-semibold mb-4">Secure and Reliable</h3>
+              <p>Enjoy secure and reliable service with top-notch privacy features.</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="pricing bg-base-100 text-white py-20 px-5">
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-10">Choose Your Plan</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="pricing-card bg-base-300 p-8 rounded-lg">
-              <h3 className="text-xl font-semibold mb-4">Free Plan</h3>
-              <p className="text-2xl font-bold mb-4">$0 / month</p>
-              <p>Basic URL shortening features.</p>
-              <button className="bg-primary text-white py-2 px-4 rounded-lg mt-6">Get Started</button>
-            </div>
-            <div className="pricing-card bg-base-300 p-8 rounded-lg">
-              <h3 className="text-xl font-semibold mb-4">Pro Plan</h3>
-              <p className="text-2xl font-bold mb-4">$9 / month</p>
-              <p>Advanced features with custom branding.</p>
-              <button className="bg-primary text-white py-2 px-4 rounded-lg mt-6">Get Started</button>
-            </div>
-            <div className="pricing-card bg-base-300 p-8 rounded-lg">
-              <h3 className="text-xl font-semibold mb-4">Enterprise Plan</h3>
-              <p className="text-2xl font-bold mb-4">$29 / month</p>
-              <p>Premium features with dedicated support.</p>
-              <button className="bg-primary text-white py-2 px-4 rounded-lg mt-6">Get Started</button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PricingCard />
 
       {/* About Us Section */}
-      <section id="about" className="about bg-base-200 text-white py-20">
+      <section id="about" className="about bg-base-200 text-white py-32">
         <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-10">About TinyPath</h2>
-          <p className="mb-6">TinyPath is committed to providing the best URL shortening service to help you streamline your online presence and enhance your marketing efforts.</p>
-          <p className="mb-6">Our mission is to make sharing and tracking links easier, faster, and more efficient for everyone.</p>
+          <h2 className="text-4xl font-bold mb-12">About TinyPath</h2>
+          <p className="mb-8 text-xl">TinyPath is committed to providing the best URL shortening service to help you streamline your online presence and enhance your marketing efforts.</p>
+          <p className="mb-8 text-xl">Our mission is to make sharing and tracking links easier, faster, and more efficient for everyone.</p>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-neutral text-white py-8">
-        <div className="container mx-auto flex flex-col md:flex-row justify-center items-center">
-          <div className="mb-4 md:mb-0">
-            <p>© 2024 TinyPath. All rights reserved.</p>
-          </div>
+      <footer className="bg-neutral text-white py-12">
+        <div className="container mx-auto text-center">
+          <p className="text-lg">© 2024 TinyPath. All rights reserved.</p>
         </div>
       </footer>
     </div>
