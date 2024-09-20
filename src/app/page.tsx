@@ -60,11 +60,9 @@ const LandingPage: React.FC = () => {
           {/* Hero Section */}
           <section id="home" className="hero text-white py-32 flex flex-col items-center text-center min-h-screen justify-center relative">
             <div className="absolute inset-0 overflow-hidden">
-              {/* Background Spline Scene */}
-
               <main>
                 <video
-                  src="/HeroBG.mp4"
+                  src="https://raw.githubusercontent.com/titan1230/CDN-Repo/main/uploads/HeroBG.mp4"
                   autoPlay
                   loop
                   muted
