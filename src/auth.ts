@@ -8,6 +8,10 @@ export const BASE_PATH = "/api/auth";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: MongoDBAdapter(client, { databaseName: "tinypath" }),
+  pages: {
+    error: "/error",
+    signIn: "/onboarding"
+  },
   jwt: {
     maxAge: 30 * 24 * 60 * 60,
   },
