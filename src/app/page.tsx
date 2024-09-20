@@ -63,17 +63,6 @@ const LandingPage: React.FC = () => {
           <section id="home" className="hero text-white py-32 flex flex-col items-center text-center min-h-screen justify-center relative">
             <div className="absolute inset-0 overflow-hidden">
               {/* Background Spline Scene */}
-              {/* <div>
-                <Image
-                  src="/HeroBG.gif"
-                  alt="Hero Background"
-                  fill
-                  quality={100}
-                  className="z-0 object-cover"
-                  priority
-                  unoptimized={true}
-                />
-              </div> */}
 
               <main>
                 <video
@@ -88,7 +77,7 @@ const LandingPage: React.FC = () => {
                   Your browser does not support the video tag.
                 </video>
               </main>
-
+              <div className="absolute inset-0 bg-gradient-to-b from-black/15 to-black/30 z-0"></div>
             </div>
 
             {/* Hero Content */}
