@@ -3,8 +3,6 @@
 import React, { Suspense, useState } from "react";
 import Image from 'next/image';
 
-const Spline = React.lazy(() => import('@splinetool/react-spline/next'));
-
 import { FiLink, FiEdit, FiBarChart2, FiLock } from 'react-icons/fi';
 import { FaDollarSign, FaHouseChimney } from "react-icons/fa6";
 
@@ -94,7 +92,7 @@ const LandingPage: React.FC = () => {
 
 
           {/* Features Section */}
-          <section id="features" className="features bg-gradient-to-r to-[#e059d9] from-[#000025] text-white py-32 px-10">
+          <section id="features" className="features bg-gradient-to-b to-[#5fd9ca] from-[#000025] text-white py-32 px-10">
             <div className="container mx-auto text-center">
               <h2 className="text-4xl font-bold mb-12">Why Choose TinyPath?</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
