@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useState } from "react";
+import React, { useState } from "react";
 import Image from 'next/image';
 
 import { FiLink, FiEdit, FiBarChart2, FiLock } from 'react-icons/fi';
@@ -87,7 +87,6 @@ const LandingPage: React.FC = () => {
               </Link>
             </div>
           </section>
-
 
           {/* Features Section */}
           <section id="features" className="features bg-gradient-to-b to-[#5fd9ca] from-[#000025] text-white py-32 px-10">
