@@ -14,7 +14,7 @@ export default auth((req) => {
   if (!req.auth && reqUrl?.pathname !== "/") {
     if (reqUrl.pathname === "/onboarding") return;
 
-    return NextResponse.redirect(new URL(`/onboarding`, req.url));
+    return NextResponse.redirect(new URL(`/onboarding?to=${encodeURIComponent(reqUrl.pathname)}`, req.url));
   }
 
   if (req.auth && reqUrl?.pathname === "/onboarding") {
