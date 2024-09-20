@@ -63,34 +63,30 @@ const LandingPage: React.FC = () => {
           <section id="home" className="hero text-white py-32 flex flex-col items-center text-center min-h-screen justify-center relative">
             <div className="absolute inset-0 overflow-hidden">
               {/* Background Spline Scene */}
-              {/* <Suspense fallback={
-                <div>
-                  <Image
-                    src="/HeroBackground.png"
-                    alt="Hero Background"
-                    fill
-                    quality={100}
-                    className="z-0 object-cover"
-                    priority
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/90 z-0"></div>
-                </div>
-              }>
-                <main>
-                  <Spline
-                    scene="https://prod.spline.design/PLLRXsDm5UB4hV8X/scene.splinecode"
-                    className="scale-110 w-full h-full object-cover z-50"
-
-                  />
-                </main>
-              </Suspense> */}
+              {/* <div>
+                <Image
+                  src="/HeroBG.gif"
+                  alt="Hero Background"
+                  fill
+                  quality={100}
+                  className="z-0 object-cover"
+                  priority
+                  unoptimized={true}
+                />
+              </div> */}
 
               <main>
-                <Spline
-                  scene="https://prod.spline.design/PLLRXsDm5UB4hV8X/scene.splinecode"
-                  className="scale-110 w-full h-full object-cover z-50"
-
-                />
+                <video
+                  src="/HeroBG.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                  className="absolute inset-0 w-full h-full z-0 object-cover object-center"
+                >
+                  Your browser does not support the video tag.
+                </video>
               </main>
 
             </div>

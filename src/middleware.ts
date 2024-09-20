@@ -3,7 +3,7 @@ import authConfig from "@/auth.config";
 import NextAuth from "next-auth";
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\.svg|.*\.png).*)"]
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\.svg|.*\.png|.*\.mp4).*)"]
 }
 
 const { auth } = NextAuth(authConfig);
