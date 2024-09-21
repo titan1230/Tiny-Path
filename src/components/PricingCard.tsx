@@ -11,7 +11,7 @@ function PricingSection() {
       isFree: true,
       description: 'Perfect for individuals and small projects. Get started with essential features and shorten links effortlessly.',
       features: [
-        'Create up to 100 short links per month',
+        'Unlimited short links',
         'Basic Customization',
         'Access to community support',
       ],
@@ -22,7 +22,7 @@ function PricingSection() {
       price: 5,
       description: 'Ideal for startups and small businesses. Unlock more features to boost engagement and track your links efficiently.',
       features: [
-        'Unlimited short links.',
+        'Unlimited short links',
         'Customizable URLs',
         'Priority support with live chat',
       ],
@@ -66,7 +66,7 @@ function PricingSection() {
                 <span className="text-slate-300 text-sm">{plan.description}</span>
               </div>
               <div className="mt-5">
-                <Link href={plan.link} target='_blank'>
+                <Link href={plan.link}>
                   <button
                     className="bg-sky-500 buttonPress hover:bg-sky-400 text-white w-full h-10 rounded-full"
                     aria-label={`Get started with the ${plan.name}`}
