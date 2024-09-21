@@ -3,7 +3,7 @@ import authConfig from "@/auth.config";
 import NextAuth from "next-auth";
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|plans|.*\.svg|.*\.png|.*\.mp4|.*\.lottie).*)"]
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|plans|contact|.*\.svg|.*\.png|.*\.mp4|.*\.lottie).*)"]
 }
 
 const { auth } = NextAuth(authConfig);
@@ -18,6 +18,13 @@ export default auth((req) => {
   }
 
   if (req.auth && reqUrl?.pathname === "/onboarding") {
-    return NextResponse.redirect(new URL(`/dashboard`, req.url));
+
+    const redTO = reqUrl.searchParams.get("to");
+
+    if (redTO) {
+      return NextResponse.redirect(new URL(redTO, req.url));
+    } else {
+      return NextResponse.redirect(new URL(`/dashboard`, req.url));
+    }
   }
 });
