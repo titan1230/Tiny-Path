@@ -54,13 +54,13 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Link href="/dashboard" className="flex items-center py-2 px-4 rounded hover:bg-gray-600">
             <AiOutlineHome className="mr-2" /> Home
           </Link>
-          <Link href="/analytics" className="flex items-center py-2 px-4 rounded hover:bg-gray-600">
+          <Link href="/dashboard/analytics" className="flex items-center py-2 px-4 rounded hover:bg-gray-600">
             <AiOutlineAreaChart className="mr-2" /> Analytics
           </Link>
-          <Link href="/geography" className="flex items-center py-2 px-4 rounded hover:bg-gray-600">
+          <Link href="/dashboard/geography" className="flex items-center py-2 px-4 rounded hover:bg-gray-600">
             <BiWorld className="mr-2" /> Geography
           </Link>
-          <Link href="/links" className="flex items-center py-2 px-4 rounded hover:bg-gray-600">
+          <Link href="/dashboard/links" className="flex items-center py-2 px-4 rounded hover:bg-gray-600">
             <MdLink className="mr-2" /> Links
           </Link>
         </nav>
