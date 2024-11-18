@@ -10,12 +10,16 @@ import {
 } from 'react-icons/ai';
 import { BiWorld } from "react-icons/bi";
 import { MdLink } from "react-icons/md";
+import { usePathname } from 'next/navigation'
 
 import Image from 'next/image';
 
 export default function Layout({ children }: { children: ReactNode }) {
+
   const [isOpen, setIsOpen] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
+
+  const p = usePathname();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -51,16 +55,24 @@ export default function Layout({ children }: { children: ReactNode }) {
 
         {/* Navigation Links with Icons */}
         <nav className="space-y-4 text-xl">
-          <Link href="/dashboard" className="flex items-center py-2 px-4 rounded hover:bg-gray-600">
+          <Link href="/dashboard" onClick={toggleSidebar} 
+            className={"flex items-center py-2 px-4 rounded hover:bg-gray-600" + (p === '/dashboard' ? ' bg-gray-600' : '')}
+          >
             <AiOutlineHome className="mr-2" /> Home
           </Link>
-          <Link href="/dashboard/analytics" className="flex items-center py-2 px-4 rounded hover:bg-gray-600">
+          <Link href="/dashboard/analytics" onClick={toggleSidebar} 
+            className={"flex items-center py-2 px-4 rounded hover:bg-gray-600" + (p === '/dashboard/analytics' ? ' bg-gray-600' : '')}
+          >
             <AiOutlineAreaChart className="mr-2" /> Analytics
           </Link>
-          <Link href="/dashboard/geography" className="flex items-center py-2 px-4 rounded hover:bg-gray-600">
+          <Link href="/dashboard/geography" onClick={toggleSidebar} 
+            className={"flex items-center py-2 px-4 rounded hover:bg-gray-600" + (p === '/dashboard/geography' ? ' bg-gray-600' : '')}
+          >
             <BiWorld className="mr-2" /> Geography
           </Link>
-          <Link href="/dashboard/links" className="flex items-center py-2 px-4 rounded hover:bg-gray-600">
+          <Link href="/dashboard/links" onClick={toggleSidebar} 
+            className={"flex items-center py-2 px-4 rounded hover:bg-gray-600" + (p === '/dashboard/links' ? ' bg-gray-600' : '')}
+          >
             <MdLink className="mr-2" /> Links
           </Link>
         </nav>
@@ -80,7 +92,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Image src="/TinyPath.png" className='items-center mx-4' alt="MyApp Logo" height={40} width={40} priority />
         </header>
 
-        <main className="flex-1 overflow-y-auto p-6">{children}</main>
+        <main className="flex-1 overflow-y-auto p-6 bg-[#9db4c0]">{children}</main>
       </div>
     </div>
   );
