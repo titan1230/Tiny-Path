@@ -1,7 +1,5 @@
-import NextAuth, { Account, NextAuthConfig } from "next-auth";
-import client from "@/lib/db";
+import NextAuth, { NextAuthConfig } from "next-auth";
 import GoogleProvider from "next-auth/providers/google"
-import { JWT } from "next-auth/jwt";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "./database/drizzle";
 
