@@ -1,13 +1,9 @@
 import { NextResponse } from "next/server";
-import authConfig from "@/auth.config";
-import NextAuth from "next-auth";
+import { auth } from "@/auth";
 
 export const config = {
   matcher: ["/dashboard/:path*"]
 }
-
-
-const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
   const reqUrl = new URL(req.url);
