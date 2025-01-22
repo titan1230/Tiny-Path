@@ -1,13 +1,19 @@
-import { MongoDBAdapter } from "@auth/mongodb-adapter";
-import NextAuth, { Account } from "next-auth";
+import NextAuth, { Account, NextAuthConfig } from "next-auth";
 import client from "@/lib/db";
-import authConfig from "./auth.config";
+import GoogleProvider from "next-auth/providers/google"
 import { JWT } from "next-auth/jwt";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { db } from "./database/drizzle";
 
 export const BASE_PATH = "/api/auth";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter: MongoDBAdapter(client, { databaseName: "tinypath" }),
+const authOptions: NextAuthConfig = {
+  adapter: DrizzleAdapter(db),
+  basePath: BASE_PATH,
+  secret: process.env.AUTH_SECRET,
+  session: {
+    strategy: "jwt",
+  },
   pages: {
     error: "/error",
     signIn: "/onboarding"
@@ -15,79 +21,35 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   jwt: {
     maxAge: 30 * 24 * 60 * 60,
   },
+  providers: [
+    GoogleProvider({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+    })
+  ],
   callbacks: {
-    jwt({ token, user, account }: { token: JWT; user: any; account: Account | null }) {
-
+    async jwt({ token, user }) {
       if (user) {
-
         token.id = user.id;
-
-        if (account) {
-          token.accessToken = account.access_token;
-          token.provider = account.provider;
-        }
+        token.name = user.name;
       }
 
       return token;
     },
-    authorized({ request, auth }) {
-      try {
-        const { pathname } = request.nextUrl;
-        const unprotectedRoutes = ["/", "/onboarding", "/api/auth/signin"];
-
-        if (unprotectedRoutes.includes(pathname)) {
-          return true;
-        }
-
-        return !!auth;
-      } catch (error) {
-        console.error("Authorization check failed:", error);
-        return false;
-      }
-    },
     async session({ session, token }) {
-      if (token?.accessToken) {
-        session.accessToken = token.accessToken as string;
-
-        try {
-          const db = client.db("tinypath");
-          const collection = db.collection("users");
-
-          const user = await collection.findOne({ email: token.email });
-          session.user.id = user?._id.toString() as string;
-
-          if (user?.username) {
-            session.user.username = user.username;
-          } else {
-            console.log("User not found, creating new user");
-            const newUser = {
-              username: token.email?.substring(0, token.email.indexOf("@")) || "defaultUsername",
-            };
-
-            const insertResult = await collection.findOneAndUpdate(
-              { email: token.email },                  // Filter by email
-              { $set: newUser },                       // Update with new user data
-              { returnDocument: 'after', upsert: true } // Return the updated document after upserting
-            );
-
-            session.user.username = newUser.username;
-          }
-        } catch (error) {
-          console.error("Failed to fetch or insert user:", error);
-        }
+      if (session.user) {
+        session.user.id = token.id as string;
+        session.user.name = token.name as string;
       }
 
       return session;
     },
   },
-  basePath: BASE_PATH,
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60,
-  },
-  secret: process.env.AUTH_SECRET,
-  ...authConfig,
-});
+};
+
+export const { handlers, signIn, signOut, auth } = NextAuth(authOptions);
+
+export default auth;
 
 declare module "next-auth" {
   interface Session {
