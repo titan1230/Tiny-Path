@@ -1,6 +1,14 @@
 "use client";
 
+declare global {
+  interface Window {
+    adsbygoogle: any[];
+  }
+}
+
 import { useEffect, useState } from "react";
+import { Adsense as AdSense } from '@ctrl/react-adsense';
+import Script from "next/script";
 
 interface PageParams {
   redirectURL: string;
@@ -9,7 +17,6 @@ interface PageParams {
 type Params = Promise<PageParams>;
 
 export default function Redirect({ params }: { params: Params }) {
-
   const [redirectURL, setRedirectURL] = useState<string | null>(null);
   const [countdown, setCountdown] = useState<number>(5);
 
@@ -41,7 +48,8 @@ export default function Redirect({ params }: { params: Params }) {
         const data = await response.json();
 
         if (data?.url) {
-          window.location.assign(data.url);
+          // Uncomment to enable redirection:
+          // window.location.assign(data.url);
         } else {
           throw new Error("Invalid redirection URL received from API");
         }
@@ -98,11 +106,51 @@ export default function Redirect({ params }: { params: Params }) {
   };
 
   return (
-    <div className="h-screen bg-gradient-to-b to-[#5fd9ca] from-[#000025] flex justify-center items-center flex-col">
+    <div className="h-screen bg-gradient-to-b to-[#5fd9ca] from-[#000025] flex justify-center items-center flex-col relative">
+      {/* Main Content */}
       <span className="text-2xl font-bold text-center block loading-spinner loading" />
       <p className="text-white text-center mt-4 text-4xl">
         Redirecting in {countdown}...
       </p>
+
+      {/* Vertical Ads for Larger Screens */}
+      <div className="hidden lg:flex absolute top-0 left-0 h-full w-[160px] justify-center items-center">
+        <AdSense
+          client="ca-pub-6673007622499235"
+          slot="8748244823"
+          style={{ display: 'block', width: '160px', height: '600px' }}
+          format="auto"
+        />
+      </div>
+      <div className="hidden lg:flex absolute top-0 right-0 h-full w-[160px] justify-center items-center">
+        <AdSense
+          client="ca-pub-6673007622499235"
+          slot="8748244823"
+          style={{ display: 'block', width: '160px', height: '600px' }}
+          format="auto"
+        />
+      </div>
+
+      {/* Horizontal Ad for Smaller Screens */}
+      <div className="lg:hidden fixed bottom-0 left-0 w-full text-center py-2">
+        <AdSense
+          client="ca-pub-6673007622499235"
+          slot="4457646027"
+          style={{ display: 'block', width: '100%', height: '90px' }}
+          format="auto"
+        />
+      </div>
+
+      {/* Ensure Script loads after DOM */}
+      <Script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+        onLoad={() => {
+          if (window.adsbygoogle && window.adsbygoogle.length === 0) {
+            window.adsbygoogle.push({});
+          }
+        }}
+      />
     </div>
   );
 }
