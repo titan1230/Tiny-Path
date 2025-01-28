@@ -29,8 +29,7 @@ export default async function AnalyticsPage() {
   const userDevices = await getUserDevices();
 
   return (
-    <div className="analytics-dashboard">
-
+    <div className="analytics-dashboard p-6">
       <div className='isolate rounded-xl bg-white/20 shadow-lg ring-1 ring-black/5 pr-8 pt-5'>
         <h2 className='text-3xl font-semibold pl-5 pb-3 text-black'>Clicks per day</h2>
         <Suspense fallback={<span className='loading loading-spinner'></span>}>
