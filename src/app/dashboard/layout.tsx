@@ -92,7 +92,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Image src="/TinyPath.png" className='items-center mx-4' alt="MyApp Logo" height={40} width={40} priority />
         </header>
 
-        <main className="flex-1 overflow-y-auto p-6 bg-[#9db4c0]">{children}</main>
+        <main className="flex-1 overflow-y-auto bg-[#9db4c0]">{children}</main>
       </div>
     </div>
   );
