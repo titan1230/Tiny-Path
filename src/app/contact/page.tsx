@@ -18,7 +18,6 @@ const ContactSalesPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form Submitted", formData);
     alert("Thank you for contacting us! We will get back to you soon.");
     setFormData({ name: "", email: "", company: "", message: "" });
   };
