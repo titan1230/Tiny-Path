@@ -79,7 +79,7 @@ const LandingPage: React.FC = () => {
             {/* Hero Content */}
             <div className="z-10">
               <h1 className="text-6xl font-extrabold mb-6">Shorten, Share, and Track Your Links with Ease</h1>
-              <p className="text-xl mb-8">TinyPath makes URL shortening simple and effective for everyone.</p>
+              <p className="text-xl mb-8 px-1">TinyPath makes URL shortening simple and effective for everyone.</p>
               <Link href="/dashboard">
                 <button className="bg-primary text-white py-4 px-8 rounded-full hover:bg-[#1171ee] ease-in-out transition-all shadow-lg">
                   Shorten Your First Link Now
