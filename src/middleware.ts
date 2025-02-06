@@ -3,22 +3,19 @@ import { auth } from "@/auth";
 
 export const config = {
   matcher: ["/dashboard/:path*"]
-}
+};
 
 export default auth((req) => {
   const reqUrl = new URL(req.url);
 
-  if (!req.auth && reqUrl?.pathname !== "/") {
-    if (reqUrl.pathname === "/onboarding") return;
-
+  if (!req.auth && reqUrl.pathname !== "/") {
     return NextResponse.redirect(new URL(`/onboarding?to=${encodeURIComponent(reqUrl.pathname)}`, req.url));
   }
 
-  if (req.auth && reqUrl?.pathname === "/onboarding") {
-
+  if (req.auth && reqUrl.pathname === "/onboarding") {
     const redTO = reqUrl.searchParams.get("to");
 
-    if (redTO) {
+    if (redTO && redTO !== "/onboarding") {
       return NextResponse.redirect(new URL(redTO, req.url));
     } else {
       return NextResponse.redirect(new URL(`/dashboard`, req.url));
