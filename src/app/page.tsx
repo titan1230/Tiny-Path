@@ -62,7 +62,7 @@ const LandingPage: React.FC = () => {
             <div className="absolute inset-0 overflow-hidden">
               <main>
                 <video
-                  src="https://raw.githubusercontent.com/titan1230/CDN-Repo/main/uploads/HeroBG.mp4"
+                  src="https://xzy5oofpng.ufs.sh/f/HHzxRMaeyzLrKOLnam11Toy7bkZdXSeMfvJViwj6rcmPnqYp"
                   autoPlay
                   loop
                   muted
