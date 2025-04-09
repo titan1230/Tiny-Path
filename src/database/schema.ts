@@ -6,14 +6,23 @@ import {
   primaryKey,
   integer,
   pgEnum,
+  serial,
+  varchar,
+  index,
+  uuid,
 } from "drizzle-orm/pg-core"
 import type { AdapterAccountType } from "next-auth/adapters"
 
 export const ACCOUNT_TYPE_ENUM = pgEnum("accountType", [
-    "Basic",
-    "Premium"
+  "Basic",
+  "Premium"
 ]);
-   
+
+export const URL_TYPE_ENUM = pgEnum('urlType', [
+  'permanent',
+  'temp'
+]);
+
 export const users = pgTable("user", {
   id: text("id")
     .primaryKey()
@@ -24,7 +33,7 @@ export const users = pgTable("user", {
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
 })
- 
+
 export const accounts = pgTable(
   "account",
   {
@@ -50,7 +59,7 @@ export const accounts = pgTable(
     },
   ]
 )
- 
+
 export const sessions = pgTable("session", {
   sessionToken: text("sessionToken").primaryKey(),
   userId: text("userId")
@@ -58,7 +67,7 @@ export const sessions = pgTable("session", {
     .references(() => users.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),
 })
- 
+
 export const verificationTokens = pgTable(
   "verificationToken",
   {
@@ -74,7 +83,7 @@ export const verificationTokens = pgTable(
     },
   ]
 )
- 
+
 export const authenticators = pgTable(
   "authenticator",
   {
@@ -97,3 +106,21 @@ export const authenticators = pgTable(
     },
   ]
 )
+
+export const urls = pgTable('urls',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    originalUrl: text('original_url').notNull(),
+    shortUrl: varchar('short_url', { length: 6 }).notNull().unique(),
+    urlType: URL_TYPE_ENUM('url_type').notNull().default('temp'),
+    expiresAt: timestamp('expires_at'),
+    userId: varchar('user_id', { length: 255 }).references(() => users.id, { onDelete: 'cascade' }),
+    clicks: integer('clicks').default(0).notNull(),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (urls) => [
+    index('short_url_idx').on(urls.shortUrl),
+    index('user_id_idx').on(urls.userId),
+    index('expires_at_idx').on(urls.expiresAt),
+  ]
+);
