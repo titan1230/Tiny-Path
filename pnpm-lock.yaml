@@ -9,13 +9,13 @@ importers:
   .:
     dependencies:
       '@auth/drizzle-adapter':
-        specifier: ^1.7.4
+        specifier: ^1.8.0
         version: 1.8.0
       '@ctrl/react-adsense':
         specifier: ^1.8.0
         version: 1.8.0
       '@lottiefiles/dotlottie-react':
-        specifier: ^0.12.1
+        specifier: ^0.12.3
         version: 0.12.3(react@19.1.0)
       '@neondatabase/serverless':
         specifier: ^0.10.4
@@ -24,10 +24,10 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5(@upstash/redis@1.34.7)
       '@upstash/redis':
-        specifier: ^1.34.3
+        specifier: ^1.34.7
         version: 1.34.7
       '@vercel/analytics':
-        specifier: ^1.4.1
+        specifier: ^1.5.0
         version: 1.5.0(next@15.2.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       date-fns:
         specifier: ^4.1.0
@@ -42,56 +42,56 @@ importers:
         specifier: ^0.474.0
         version: 0.474.0(react@19.1.0)
       mapbox-gl:
-        specifier: ^3.9.4
+        specifier: ^3.11.0
         version: 3.11.0
       next:
-        specifier: ^15.1.6
+        specifier: ^15.2.5
         version: 15.2.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       next-auth:
-        specifier: ^5.0.0-beta.25
+        specifier: 5.0.0-beta.25
         version: 5.0.0-beta.25(next@15.2.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       react:
-        specifier: ^19.0.0
+        specifier: ^19.1.0
         version: 19.1.0
       react-dom:
-        specifier: ^19.0.0
+        specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
       react-icons:
-        specifier: ^5.4.0
+        specifier: ^5.5.0
         version: 5.5.0(react@19.1.0)
       recharts:
-        specifier: ^2.15.0
+        specifier: ^2.15.2
         version: 2.15.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     devDependencies:
       '@types/node':
-        specifier: ^20
+        specifier: ^20.17.30
         version: 20.17.30
       '@types/react':
-        specifier: ^18
+        specifier: ^18.3.20
         version: 18.3.20
       '@types/react-dom':
-        specifier: ^18
+        specifier: ^18.3.6
         version: 18.3.6(@types/react@18.3.20)
       daisyui:
-        specifier: ^4.12.10
+        specifier: ^4.12.24
         version: 4.12.24(postcss@8.5.3)
       drizzle-kit:
-        specifier: ^0.30.2
+        specifier: ^0.30.6
         version: 0.30.6
       eslint:
-        specifier: ^8
+        specifier: ^8.57.1
         version: 8.57.1
       eslint-config-next:
         specifier: 14.2.6
         version: 14.2.6(eslint@8.57.1)(typescript@5.8.3)
       postcss:
-        specifier: ^8
+        specifier: ^8.5.3
         version: 8.5.3
       tailwindcss:
-        specifier: ^3.4.1
+        specifier: ^3.4.17
         version: 3.4.17
       typescript:
-        specifier: ^5
+        specifier: ^5.8.3
         version: 5.8.3
 
 packages:
