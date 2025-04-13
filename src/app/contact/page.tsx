@@ -131,12 +131,6 @@ const ContactSalesPage: React.FC = () => {
             <p className="text-lg font-medium text-gray-800">Email</p>
             <p className="text-gray-600">sales@example.com</p>
           </div>
-          <div className="flex flex-col items-center bg-white p-6 rounded-lg shadow-lg border border-gray-200 w-64 hover:shadow-xl transition duration-300 ease-in-out">
-            <FaMapMarkerAlt className="text-3xl text-blue-600 mb-4" />
-            <p className="text-lg font-medium text-gray-800">Visit Us</p>
-            <p className="text-gray-600">123 Business St, Suite 100</p>
-            <p className="text-gray-600">San Francisco, CA 94111</p>
-          </div>
         </div>
       </div>
     </div>
