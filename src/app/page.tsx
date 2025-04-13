@@ -2,16 +2,25 @@
 
 import React, { useState } from "react";
 import Image from 'next/image';
+import Link from "next/link";
 
 import { FiLink, FiEdit, FiBarChart2, FiLock } from 'react-icons/fi';
 import { FaDollarSign, FaHouseChimney } from "react-icons/fa6";
 
-import Link from "next/link";
 import PricingCard from "@/components/PricingCard";
+import isValidUrl from "@/lib/utils/urlChecker";
 
 const LandingPage: React.FC = () => {
 
   const [isOpen, setIsOpen] = useState(false);
+  const [longUrl, setLongUrl] = useState<string>("");
+  const [isValid, setIsValid] = useState(true);
+
+  const handleShortenClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    
+    setIsValid(longUrl !== "" && isValidUrl(longUrl));
+  }
 
   return (
     <div className="bg-base-100 text-white">
@@ -69,6 +78,8 @@ const LandingPage: React.FC = () => {
                   playsInline
                   preload="metadata"
                   className="absolute inset-0 w-full h-full z-0 object-cover object-center"
+                  aria-hidden="true"
+                  role="presentation"
                 >
                   Your browser does not support the video tag.
                 </video>
@@ -80,8 +91,31 @@ const LandingPage: React.FC = () => {
             <div className="z-10">
               <h1 className="text-6xl font-extrabold mb-6">Shorten, Share, and Track Your Links with Ease</h1>
               <p className="text-xl mb-8 px-1">TinyPath makes URL shortening simple and effective for everyone.</p>
+
+              {/* Joined Input + Button */}
+              <div className="join w-full justify-center mb-2">
+                <input
+                  type="text"
+                  placeholder="Paste your long URL here"
+                  autoComplete="off"
+                  value={longUrl}
+                  onChange={(e) => setLongUrl(e.target.value)}
+                  className="input input-bordered join-item w-full sm:w-[400px] bg-white text-black rounded-l-full"
+                />
+                <button
+                  className="btn btn-primary join-item rounded-r-full px-6"
+                  onClick={handleShortenClick}
+                >
+                  Shorten
+                </button>
+              </div>
+
+              {longUrl !== "" && !isValid && (
+                <p className="text-red-400 text-sm">Please enter a valid URL.</p>
+              )}
+
               <Link href="/dashboard">
-                <button className="bg-primary text-white py-4 px-8 rounded-full hover:bg-[#1171ee] ease-in-out transition-all shadow-lg">
+                <button className="mt-4 bg-primary text-white py-4 px-8 rounded-full hover:bg-[#1171ee] ease-in-out transition-all shadow-lg">
                   Shorten Your First Link Now
                 </button>
               </Link>
