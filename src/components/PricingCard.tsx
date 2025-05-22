@@ -1,110 +1,239 @@
 'use client';
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { motion } from 'motion/react';
+import { FiCheck, FiStar } from 'react-icons/fi';
+
+interface PricingPlan {
+  name: string;
+  price: {
+    monthly: number | string;
+    annually: number | string;
+  };
+  isFree?: boolean;
+  isEnterprise?: boolean;
+  description: string;
+  features: string[];
+  link: string;
+  cta: string;
+  popular?: boolean;
+}
+
+type BillingCycle = 'monthly' | 'annually';
 
 function PricingSection() {
+  const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
 
-  const pricingPlans = [
+  const pricingPlans: PricingPlan[] = [
     {
-      name: 'Free Plan',
-      price: 0,
+      name: 'Free',
+      price: { monthly: 0, annually: 0 },
       isFree: true,
-      description: 'Perfect for individuals and small projects. Get started with essential features and shorten links effortlessly.',
+      description: 'Perfect for individuals and small projects.',
       features: [
-        'Unlimited short links',
-        'Basic Customization',
-        'Access to community support',
+        'Up to 50 short links',
+        'Basic analytics',
+        'Standard support',
+        'Single user',
+        'Basic link customization',
       ],
-      link: '/plans',
+      link: '/signup',
+      cta: 'Get Started',
+      popular: false,
     },
     {
-      name: 'Business Plan',
-      price: 5,
-      description: 'Ideal for startups and small businesses. Unlock more features to boost engagement and track your links efficiently.',
+      name: 'Pro',
+      price: { monthly: 9, annually: 89 },
+      description: 'Ideal for professionals and growing businesses.',
       features: [
         'Unlimited short links',
-        'Customizable URLs',
-        'Priority support with live chat',
+        'Advanced analytics',
+        'Priority support',
+        'Up to 5 team members',
+        'Custom branded domains',
+        'QR code generation',
+        'Password protected links',
       ],
-      link: '/plans',
+      link: '/plans/pro',
+      cta: 'Start Free Trial',
+      popular: true,
     },
     {
-      name: 'Enterprise Plan',
-      price: "Contact Sales",
+      name: 'Enterprise',
+      price: { monthly: 'Custom', annually: 'Custom' },
       isEnterprise: true,
-      description: 'Tailored solutions for large organizations with high-volume link needs and detailed tracking.',
+      description: 'Tailored solutions for large organizations.',
       features: [
-        'Custom API integration with support',
-        'Custom domains',
-        'SLA and security compliance options',
+        'Unlimited everything',
+        'Dedicated account manager',
+        'SLA guarantees',
+        'Unlimited team members',
+        'Multiple branded domains',
+        'API access with higher rate limits',
+        'SSO & advanced security',
+        'Custom integration support',
       ],
       link: '/contact',
+      cta: 'Contact Sales',
+      popular: false,
     },
   ];
 
-  return (
-    <div className='my-10 scroll-m-24' id='pricing'>
-      <div className="flex flex-col justify-center items-center gap-4 sm:gap-5 mt-5">
-        <div className="text-4xl sm:text-6xl">Our Pricing Plans</div>
-        <span className="text-center text-gray-300 text-sm sm:text-base">
-          Select from our range of affordable plans <br /> tailored to suit every budget.
-        </span>
-      </div>
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
 
-      <div className="flex justify-center items-center flex-wrap gap-10 px-2 pb-3 mt-6">
+  return (
+    <motion.div
+      className="py-20 px-4 bg-gradient-to-b from-gray-900 to-black scroll-mt-[4rem]"
+      id="pricing"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={{
+        hidden: {},
+        visible: {
+          transition: {
+            staggerChildren: 0.1,
+          },
+        },
+      }}
+    >
+      <motion.div
+        className="max-w-7xl mx-auto text-center mb-16"
+        variants={fadeInUp}
+      >
+        <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-cyan-300 mb-4">
+          Simple, Transparent Pricing
+        </h2>
+        <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+          Choose the perfect plan for your needs. No hidden fees. Cancel anytime.
+        </p>
+
+        <div className="mt-8 inline-flex items-center p-1 bg-gray-800/80 rounded-lg">
+          <button
+            onClick={() => setBillingCycle('monthly')}
+            className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+              billingCycle === 'monthly'
+                ? 'bg-blue-500 text-white shadow-lg'
+                : 'text-gray-300 hover:text-white'
+            }`}
+          >
+            Monthly
+          </button>
+          <button
+            onClick={() => setBillingCycle('annually')}
+            className={`px-4 py-2 rounded-md text-sm font-medium transition-all flex items-center ${
+              billingCycle === 'annually'
+                ? 'bg-blue-500 text-white shadow-lg'
+                : 'text-gray-300 hover:text-white'
+            }`}
+          >
+            Annually
+            <span className="ml-1 bg-emerald-500 text-xs px-1.5 py-0.5 rounded-full text-white font-semibold">
+              Save 20%
+            </span>
+          </button>
+        </div>
+      </motion.div>
+
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         {pricingPlans.map((plan) => (
-          <div key={plan.name} className="pricing-card border-2 border-gray-700 w-80 rounded-2xl h-auto pb-10 shadow-lg bg-gradient-to-r from-black to-gray-900 z-5">
-            <div className="p-5 rounded-2xl">
-              <span className="text-white">{plan.name}</span>
-              <div className="mt-3 mb-2">
-                <span className="text-white text-3xl">
-                  {plan.isEnterprise ? plan.price : `$${plan.price}`}
-                  {plan.isFree || plan.isEnterprise ? "" : <span className="text-xs">{'One Time'}</span>}
+          <motion.div
+            key={plan.name}
+            variants={fadeInUp}
+            className={`relative rounded-2xl overflow-hidden flex flex-col h-full ${
+              plan.popular
+                ? 'border-2 border-blue-400 md:scale-105 z-10'
+                : 'border border-gray-700'
+            }`}
+          >
+            {plan.popular && (
+              <div className="absolute top-0 inset-x-0 bg-blue-500 text-white text-xs font-semibold py-1.5 text-center">
+                MOST POPULAR
+              </div>
+            )}
+
+            <div
+              className={`p-8 ${
+                plan.popular ? 'pt-12' : 'pt-8'
+              } bg-gradient-to-br from-gray-900 to-gray-950`}
+            >
+              <h3 className="text-xl font-bold text-white mb-1">{plan.name}</h3>
+              <p className="text-gray-300 text-sm mb-6">{plan.description}</p>
+
+              <div className="mb-6">
+                <span className="text-4xl font-bold text-white">
+                  {typeof plan.price[billingCycle] === 'number'
+                    ? `$${plan.price[billingCycle]}`
+                    : plan.price[billingCycle]}
                 </span>
+                {typeof plan.price[billingCycle] === 'number' && !plan.isFree && (
+                  <span className="text-gray-300 ml-2">
+                    /{billingCycle === 'monthly' ? 'mo' : 'yr'}
+                  </span>
+                )}
               </div>
-              <div className='min-h-28'>
-                <span className="text-slate-300 text-sm">{plan.description}</span>
-              </div>
-              <div className="mt-5">
-                <Link href={plan.link}>
-                  <button
-                    className="bg-sky-500 buttonPress hover:bg-sky-400 text-white w-full h-10 rounded-full"
-                    aria-label={`Get started with the ${plan.name}`}
-                  >
-                    {plan.isEnterprise ? 'Contact Sales' : 'Get Started'}
-                  </button>
-                </Link>
-              </div>
+
+              <Link href={plan.link}>
+                <button
+                  className={`w-full py-3 px-4 rounded-lg font-medium transition-all ${
+                    plan.popular
+                      ? 'bg-blue-500 hover:bg-blue-400 text-white'
+                      : plan.isFree
+                      ? 'bg-gray-700 hover:bg-gray-600 text-white'
+                      : 'bg-gray-700 hover:bg-gray-600 text-white'
+                  }`}
+                >
+                  {plan.cta}
+                </button>
+              </Link>
             </div>
-            <div className="bg-black rounded-2xl pl-5 pt-3 bg-gradient-to-r from-black to-gray-900">
-              <span className="text-white">Features</span>
-              {plan.features.map((feature, index) => (
-                <span key={index} className="text-slate-300 text-sm flex items-center gap-1 mt-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
-                  </svg>
-                  {feature}
-                </span>
-              ))}
+
+            <div className="p-8 bg-gray-900 border-t border-gray-800 flex-grow">
+              <h4 className="font-medium text-white mb-4">{`What's included:`}</h4>
+              <ul className="space-y-3">
+                {plan.features.map((feature, idx) => (
+                  <li key={idx} className="flex items-start">
+                    <span className="mr-2 mt-1 text-cyan-400">
+                      <FiCheck />
+                    </span>
+                    <span className="text-gray-200 text-sm">{feature}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
 
-      {/* Hover effect styles */}
-      <style jsx>{`
-        .pricing-card {
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        @media (min-width: 768px) {
-          .pricing-card:hover {
-            transform: scale(1.05) rotateX(5deg) rotateY(-5deg);
-            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.4);
-          }
-        }
-      `}</style>
-    </div>
+      <motion.div
+        className="mt-16 max-w-3xl mx-auto bg-gradient-to-r from-blue-900/40 to-cyan-900/40 rounded-2xl p-8 border border-blue-700/50"
+        variants={fadeInUp}
+      >
+        <div className="flex flex-col md:flex-row items-center">
+          <div className="mb-6 md:mb-0 md:mr-8">
+            <div className="bg-blue-500/20 p-3 rounded-full inline-block">
+              <FiStar className="text-cyan-300 text-2xl" />
+            </div>
+          </div>
+          <div>
+            <h3 className="text-xl font-bold text-white mb-2">
+              Need a custom solution?
+            </h3>
+            <p className="text-gray-200 mb-4">
+              {`Our team can build a tailored plan that perfectly fits your organization's needs.`}
+            </p>
+            <Link href="/contact">
+              <button className="px-5 py-2 bg-transparent border border-cyan-400 text-cyan-300 rounded-lg hover:bg-cyan-900/20 transition-all">
+                Contact our sales team
+              </button>
+            </Link>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
