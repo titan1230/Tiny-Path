@@ -10,8 +10,10 @@ import {
   varchar,
   index,
   uuid,
+  jsonb,
+  date,
 } from "drizzle-orm/pg-core"
-import type { AdapterAccountType } from "next-auth/adapters"
+import type { AdapterAccountType } from "@auth/core/adapters"
 
 export const ACCOUNT_TYPE_ENUM = pgEnum("accountType", [
   "Basic",
@@ -111,7 +113,7 @@ export const urls = pgTable('urls',
   {
     id: uuid('id').primaryKey().defaultRandom(),
     originalUrl: text('original_url').notNull(),
-    shortUrl: varchar('short_url', { length: 6 }).notNull().unique(),
+    shortUrl: varchar('short_url', { length: 8 }).notNull().unique(),
     urlType: URL_TYPE_ENUM('url_type').notNull().default('temp'),
     expiresAt: timestamp('expires_at'),
     userId: varchar('user_id', { length: 255 }).references(() => users.id, { onDelete: 'cascade' }),
@@ -124,3 +126,18 @@ export const urls = pgTable('urls',
     index('expires_at_idx').on(urls.expiresAt),
   ]
 );
+
+export const analytics = pgTable('analytics', {
+  id: serial('id').primaryKey(),
+  urlId: uuid('url_id')
+    .notNull()
+    .references(() => urls.id, { onDelete: 'cascade' }),
+  userId: text('user_id')
+    .references(() => users.id, { onDelete: 'set null' }),
+  clickedAt: timestamp('clicked_at').defaultNow().notNull(),
+  ip: text('ip'),
+  country: text('country'),
+  device: text('device'),
+  browser: text('browser'),
+  isBounce: boolean('is_bounce').default(true),
+});
