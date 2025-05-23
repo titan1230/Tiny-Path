@@ -9,6 +9,7 @@ mapboxgl.accessToken = config.env.mapBoxToken;
 
 const Globe = () => {
   const mapContainer = useRef(null);
+  const mapRef = useRef<mapboxgl.Map | null>(null);
 
   useEffect(() => {
     if (!mapContainer.current) return;
@@ -29,6 +30,8 @@ const Globe = () => {
       dragPan: true,
       renderWorldCopies: false
     });
+    
+    mapRef.current = map;
 
     map.on('load', () => {
       // Mobile-optimized layer
@@ -74,7 +77,23 @@ const Globe = () => {
       return () => window.removeEventListener('orientationchange', checkOrientation);
     });
 
-    return () => map.remove();
+    // Set up a resize observer to detect container size changes
+    const resizeObserver = new ResizeObserver(() => {
+      if (mapRef.current) {
+        mapRef.current.resize();
+      }
+    });
+    
+    if (mapContainer.current) {
+      resizeObserver.observe(mapContainer.current);
+    }
+
+    return () => {
+      resizeObserver.disconnect();
+      if (mapRef.current) {
+        mapRef.current.remove();
+      }
+    };
   }, []);
 
   return (
