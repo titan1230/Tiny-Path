@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     }
 
     if (!expiresAt) {
-        expiresAt = urlType == 'temp' ? new Date(Date.now() + 1 * 24 * 60 * 60 * 1000) : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+        expiresAt = urlType == 'temp' ? new Date(Date.now() + 1 * 24 * 60 * 60 * 1000) : null;
     }
 
     let shortUrl;
@@ -34,6 +34,7 @@ export async function POST(req: Request) {
         shortUrl,
         urlType: urlType || 'temp',
         expiresAt,
+        userId: userId || null,
     }).returning();
 
     return NextResponse.json({
