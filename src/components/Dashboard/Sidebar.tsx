@@ -13,6 +13,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react';
+import { signOut } from '@/lib/LoginUtils';
 
 interface SidebarLink {
   name: string;
@@ -123,8 +124,8 @@ export default function Sidebar({ children }: SidebarProps) {
         {/* Logout Button (at bottom) */}
         <div className="p-4 border-t border-gray-200 dark:border-gray-800">
           <button
-            className="flex items-center w-full px-3 py-2 text-red-600 dark:text-red-400 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-            onClick={() => console.log('Logout clicked')}
+            className="flex items-center w-full px-1 py-1 text-red-600 dark:text-red-400 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+            onClick={signOut}
           >
             <LogOut size={20} />
             {!collapsed && <span className="ml-3">Logout</span>}
