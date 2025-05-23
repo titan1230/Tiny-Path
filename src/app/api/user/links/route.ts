@@ -21,8 +21,6 @@ export async function GET(req: NextRequest) {
         .where(eq(urls.userId, userID))
         .orderBy(desc(urls.createdAt))
 
-    console.log(links);
-
     if (!links) {
         return NextResponse.json({ "0": [] });
     }
@@ -32,7 +30,7 @@ export async function GET(req: NextRequest) {
     for (let i = 0; i < links.length; i++) {
         const link = links[i];
         
-        returnData[i%10].push({
+        returnData[Math.floor(i/10)].push({
             id: link.id,
             originalUrl: link.originalUrl,
             shortUrl: link.shortUrl,
@@ -43,6 +41,8 @@ export async function GET(req: NextRequest) {
             userId: link.userId,
         });
     }
+
+    console.log(returnData);
 
     return NextResponse.json(returnData);
 }
