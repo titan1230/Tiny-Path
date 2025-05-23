@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
     console.log(links);
 
     if (!links) {
-        return { "0": [] };
+        return NextResponse.json({ "0": [] });
     }
 
     const returnData = createDefaultDict(() => []);
