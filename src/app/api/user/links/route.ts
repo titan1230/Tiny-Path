@@ -42,7 +42,5 @@ export async function GET(req: NextRequest) {
         });
     }
 
-    console.log(returnData);
-
     return NextResponse.json(returnData);
 }
