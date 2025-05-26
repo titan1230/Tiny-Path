@@ -30,11 +30,9 @@ export async function GET(
         // Build query conditions
         const conditions = [eq(trees.slug, treeID)];
 
-        // If userID is provided, add it to conditions (for preview mode)
         if (userID) {
             conditions.push(eq(trees.userId, userID));
         } else {
-            // For public access, only show public and active trees
             conditions.push(eq(trees.isPublic, true));
             conditions.push(eq(trees.isActive, true));
         }
@@ -87,7 +85,7 @@ export async function GET(
             .where(
                 and(
                     eq(links.treeId, tree.id),
-                    userID ? undefined : eq(links.isActive, true) // Show all links if userID provided (preview), only active for public
+                    userID ? undefined : eq(links.isActive, true)
                 )
             )
             .orderBy(links.order);
@@ -142,13 +140,11 @@ async function trackView(request: NextRequest, treeId: string) {
 
     } catch (error) {
         console.error("Error tracking view:", error);
-        // Don't throw error for analytics failure
     }
 }
 
-// Helper function to get client IP
+// Helper function to get client IP !!! DOES NOT WORK NEED TO CHANGE !!!
 function getClientIP(request: NextRequest, headersList: Headers): string {
-    // Check various headers for the real IP
     const forwardedFor = headersList.get("x-forwarded-for");
     const realIP = headersList.get("x-real-ip");
     const cfConnectingIP = headersList.get("cf-connecting-ip");

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/database/drizzle";
-import { trees, links, analytics, tree_analytics } from "@/database/schema";
+import { trees, links, tree_analytics } from "@/database/schema";
 import { eq, and } from "drizzle-orm";
 import { headers } from "next/headers";
 

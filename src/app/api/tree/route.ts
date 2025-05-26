@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/database/drizzle";
 import { trees, links } from "@/database/schema";
 import { eq, and } from "drizzle-orm";
-import { generateSlug } from "@/lib/utils/slugHelper";
-import auth from "@/auth";
 
 // GET - Fetch user's tree
 export async function GET(request: NextRequest) {
