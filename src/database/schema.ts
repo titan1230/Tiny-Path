@@ -10,8 +10,6 @@ import {
   varchar,
   index,
   uuid,
-  jsonb,
-  date,
 } from "drizzle-orm/pg-core"
 import type { AdapterAccountType } from "@auth/core/adapters"
 
@@ -141,3 +139,79 @@ export const analytics = pgTable('analytics', {
   browser: text('browser'),
   isBounce: boolean('is_bounce').default(true),
 });
+
+export const trees = pgTable(
+  "trees",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    slug: varchar("slug", { length: 100 }).notNull().unique(),
+    name: varchar("name", { length: 255 }).notNull(),
+    username: varchar("username", { length: 100 }).notNull(),
+    avatar: text("avatar"),
+    background: text("background")
+      .notNull()
+      .default("bg-gradient-to-br from-purple-400 via-pink-500 to-red-500"),
+    title: varchar("title", { length: 255 }),
+    description: text("description"),
+    isPublic: boolean("is_public").notNull().default(true),
+    isActive: boolean("is_active").notNull().default(true),
+    viewCount: integer("view_count").notNull().default(0),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (table) => [
+    index("slug_idx").on(table.slug),
+    index("tree_user_id_idx").on(table.userId),
+  ]
+);
+
+export const links = pgTable(
+  "links",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    treeId: uuid("tree_id")
+      .notNull()
+      .references(() => trees.id, { onDelete: "cascade" }),
+    title: varchar("title", { length: 255 }).notNull(),
+    url: text("url").notNull(),
+    isActive: boolean("is_active").notNull().default(true),
+    order: integer("order").notNull().default(0),
+    backgroundColor: varchar("background_color", { length: 50 }),
+    textColor: varchar("text_color", { length: 50 }),
+    borderRadius: varchar("border_radius", { length: 20 }),
+    clickCount: integer("click_count").notNull().default(0),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (table) => [
+    index("tree_id_idx").on(table.treeId),
+    index("order_idx").on(table.order),
+  ]
+);
+
+export const tree_analytics = pgTable(
+  "tree_analytics",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    treeId: uuid("tree_id")
+      .notNull()
+      .references(() => trees.id, { onDelete: "cascade" }),
+    linkId: uuid("link_id").references(() => links.id, { onDelete: "cascade" }),
+    eventType: varchar("event_type", { length: 20 }).notNull(),
+    ipAddress: varchar("ip_address", { length: 45 }),
+    userAgent: text("user_agent"),
+    referer: text("referer"),
+    country: varchar("country", { length: 2 }),
+    city: varchar("city", { length: 100 }),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => [
+    index("analytics_tree_id_idx").on(table.treeId),
+    index("analytics_link_id_idx").on(table.linkId),
+    index("analytics_event_type_idx").on(table.eventType),
+    index("analytics_created_at_idx").on(table.createdAt),
+  ]
+);
