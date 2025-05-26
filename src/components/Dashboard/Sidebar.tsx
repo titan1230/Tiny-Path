@@ -12,6 +12,7 @@ import {
   Menu,
   ChevronLeft,
   ChevronRight,
+  Network
 } from 'lucide-react';
 import { signOut } from '@/lib/LoginUtils';
 
@@ -33,7 +34,7 @@ export default function Sidebar({ children }: SidebarProps) {
   const links: SidebarLink[] = [
     { name: 'Home', href: '/dashboard', icon: <Home size={20} /> },
     { name: 'Analytics', href: '/dashboard/analytics', icon: <BarChart2 size={20} /> },
-    { name: 'Links', href: '/dashboard/links', icon: <LinkIcon size={20} /> },
+    { name: 'Tree', href: '/dashboard/links', icon: <Network size={20} /> },
     { name: 'Geography', href: '/dashboard/geography', icon: <Globe2Icon size={20} /> },
   ];
 
