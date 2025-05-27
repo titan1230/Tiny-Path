@@ -6,11 +6,13 @@ import { eq, and } from "drizzle-orm";
 // DELETE - Delete URL
 export async function DELETE(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         const sp = request.nextUrl.searchParams;
         const userID = sp.get("userID");
+
+        const { id } = await params;
 
         if (!userID) {
             return NextResponse.json({ error: "User ID is required" }, { status: 400 });
@@ -18,7 +20,7 @@ export async function DELETE(
 
         const deletedUrl = await db
             .delete(urls)
-            .where(and(eq(urls.id, params.id), eq(urls.userId, userID)))
+            .where(and(eq(urls.id, id), eq(urls.userId, userID)))
             .returning();
 
         if (deletedUrl.length === 0) {
