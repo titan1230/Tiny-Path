@@ -19,7 +19,6 @@ import { FaDollarSign, FaHouseChimney } from "react-icons/fa6";
 
 import isValidUrl from '@/lib/utils/urlChecker';
 import PricingCard from "@/components/PricingCard";
-import NewLinkModal from "@/components/NewLinkModal";
 
 const LandingPageMain: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -387,8 +386,6 @@ const LandingPageMain: React.FC = () => {
           </div>
         </div>
       </div>
-
-      <NewLinkModal userID={session?.user?.id} />
     </div>
   );
 };
