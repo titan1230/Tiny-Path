@@ -6,7 +6,7 @@ import { nanoid } from "nanoid";
 import { db } from "@/database/drizzle";
 import { urls } from "@/database/schema";
 import { eq, desc } from "drizzle-orm";
-import { anonRatelimit, ratelimit } from "@/lib/ratelimit";
+import { anonRatelimit, ratelimit } from "@/lib/rateLimit";
 
 
 // POST - Create new URL
