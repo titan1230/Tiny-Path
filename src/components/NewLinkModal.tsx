@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import toast from "react-hot-toast";
 
 interface CreateUrlModalProps {
   isOpen: boolean;
@@ -43,6 +44,11 @@ export default function NewLinkModal({
         },
         body: JSON.stringify(body),
       });
+
+      const data = await response.json();
+      if (data.error && data.error === "Rate limit exceeded") {
+        throw new Error("Rate limit exceeded. Please try again later.");
+      }
 
       if (!response.ok) {
         throw new Error("Failed to create URL");
