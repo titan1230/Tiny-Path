@@ -1,11 +1,16 @@
-import { Ratelimit } from "@upstash/ratelimit";
 import redis from "@/database/redis";
+import { Ratelimit } from "@upstash/ratelimit";
 
-const ratelimit = new Ratelimit({
-  redis,
-  limiter: Ratelimit.fixedWindow(5, "1m"),
+export const ratelimit = new Ratelimit({
+  redis: redis,
+  limiter: Ratelimit.slidingWindow(10, "1 m"),
   analytics: true,
-  prefix: "@upstash/ratelimit",
+  prefix: "tiny-path",
 });
 
-export default ratelimit;
+export const anonRatelimit = new Ratelimit({
+  redis: redis,
+  limiter: Ratelimit.slidingWindow(5, "1 m"),
+  analytics: true,
+  prefix: "tiny-anon",
+});
