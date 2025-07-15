@@ -3,6 +3,34 @@ import { db } from "@/database/drizzle";
 import { urls } from "@/database/schema";
 import { eq, and } from "drizzle-orm";
 
+// GET - Fetch URL by ID
+export async function GET(
+    request: NextRequest,
+    { params }: { params: Promise<{ id: string }> }
+) {
+    try {
+        const { id } = await params;
+
+        const url = await db
+            .select()
+            .from(urls)
+            .where(eq(urls.shortUrl, id))
+            .limit(1);
+
+        if (url.length === 0) {
+            return NextResponse.json({ error: "URL not found" }, { status: 404 });
+        }
+
+        return NextResponse.json(url[0]);
+    } catch (error) {
+        console.error("Error fetching URL:", error);
+        return NextResponse.json(
+            { error: "Internal server error" },
+            { status: 500 }
+        );
+    }
+}
+
 // DELETE - Delete URL
 export async function DELETE(
     request: NextRequest,
