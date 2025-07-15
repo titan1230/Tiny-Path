@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
 import { useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -27,6 +28,7 @@ const LandingPageMain: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const { data: session } = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,7 +47,10 @@ const LandingPageMain: React.FC = () => {
 
     if (!v) return;
 
-    (document.getElementById("new_link_modal") as HTMLDialogElement)?.showModal();
+    localStorage.setItem('longURL', longUrl);
+
+    // redirect to page
+    router.push(`/link`);
   };
 
   const fadeInUp = {
