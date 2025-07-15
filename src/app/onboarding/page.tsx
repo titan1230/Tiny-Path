@@ -5,14 +5,14 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 
 import React, { Suspense, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, Variants } from "motion/react";
 
 import { FcGoogle } from "react-icons/fc";
 import { FiArrowLeft } from "react-icons/fi";
 
 import { signIn } from "@/lib/LoginUtils";
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, y: 40, scale: 0.96 },
   visible: {
     opacity: 1,
