@@ -8,6 +8,8 @@ import { urls } from "@/database/schema";
 import { eq, desc } from "drizzle-orm";
 import { anonRatelimit, ratelimit } from "@/lib/rateLimit";
 
+import isValidUrl from "@/lib/utils/urlChecker";
+
 
 // POST - Create new URL
 export async function POST(request: NextRequest) {
@@ -25,13 +27,25 @@ export async function POST(request: NextRequest) {
         );
 
         const body = await request.json();
-        const { originalUrl, urlType, expiresAt } = body;
+        let { originalUrl, urlType, expiresAt } = body;
 
         if (!originalUrl) {
             return NextResponse.json(
                 { error: "Original URL is required" },
                 { status: 400 }
             );
+        }
+
+        // Validate input
+        if (!isValidUrl(originalUrl)) {
+            return NextResponse.json(
+                { error: "Invalid URL format" },
+                { status: 400 }
+            );
+        }
+
+        if (!urlType || (urlType !== "temp" && urlType !== "permanent")) {
+            urlType = "temp";
         }
 
         let shortUrl = urlType === "temp" ? nanoid(8) : nanoid(6);
