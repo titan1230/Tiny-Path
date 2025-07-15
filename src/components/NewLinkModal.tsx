@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, Variants } from "motion/react";
 import toast from "react-hot-toast";
 
 interface CreateUrlModalProps {
@@ -82,31 +82,32 @@ export default function NewLinkModal({
     }
   };
 
-  const modalVariants = {
-    hidden: {
-      opacity: 0,
-      scale: 0.8,
-      y: 50,
+  const modalVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.8,
+    y: 50,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      damping: 25,
+      stiffness: 300,
     },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        damping: 25,
-        stiffness: 300,
-      },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.8,
+    y: 50,
+    transition: {
+      duration: 0.2,
     },
-    exit: {
-      opacity: 0,
-      scale: 0.8,
-      y: 50,
-      transition: {
-        duration: 0.2,
-      },
-    },
-  };
+  },
+};
+
 
   const formItemVariants = {
     hidden: { opacity: 0, y: 20 },
