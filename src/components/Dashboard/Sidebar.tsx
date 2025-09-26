@@ -75,7 +75,7 @@ export default function Sidebar({ children }: SidebarProps) {
         >
           <Menu size={24} />
         </button>
-        <div className="ml-4 font-semibold">URL Shortener</div>
+        <div className="ml-4 font-semibold">Tiny Path</div>
       </div>
 
       {/* Mobile Overlay */}
@@ -92,7 +92,7 @@ export default function Sidebar({ children }: SidebarProps) {
           } ${mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}
       >
         <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200 dark:border-gray-800">
-          {!collapsed && <span className="font-semibold">URL Shortener</span>}
+          {!collapsed && <span className="font-semibold">Tiny Path</span>}
           <button
             onClick={() => setCollapsed(!collapsed)}
             className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 ml-auto"
