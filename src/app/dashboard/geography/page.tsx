@@ -16,7 +16,7 @@ const Globe = () => {
 
     const map = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/titan1230/cm6guvm8j00e001pb8xyt1pti',
+      style: 'mapbox://styles/titan1230/cm6guqad6002401sd5ssbgfrz',
       center: [0, 0],
       zoom: 1.5,
       bearing: 0,
