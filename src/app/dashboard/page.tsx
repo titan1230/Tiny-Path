@@ -31,7 +31,8 @@ async function fetchLinks(userID: string | undefined): Promise<{ [key: string]: 
   const res = await fetch(`/api/user/links?userID=${userID}`);
   if (!res.ok) throw new Error('Failed to fetch links');
 
-  return res.json();
+  const data = await res.json();
+  return data;
 }
 
 export default function Dashboard() {
@@ -44,11 +45,11 @@ export default function Dashboard() {
   const [loading, setLoading] = useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const loadLinks = useCallback(() => {
+  const loadLinks = useCallback(async () => {
     setLoading(true);
     fetchLinks(session.data?.user.id).then((data) => {
       setTotalLinks(data);
-      setLinks(data['0']);
+      setLinks(data["0"] || []);
       setPages(Object.keys(data).length - 1);
       setLoading(false);
     });
@@ -153,7 +154,7 @@ export default function Dashboard() {
                     {formatDistanceToNow(new Date(data.createdAt), { addSuffix: true })}
                   </div>
                 </div>
-              ))
+              ))  
             )}
           </div>
 
